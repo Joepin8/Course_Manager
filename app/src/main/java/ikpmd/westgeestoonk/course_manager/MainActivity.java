@@ -2,6 +2,7 @@ package ikpmd.westgeestoonk.course_manager;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -18,21 +19,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference mChildref = mRootRef.child("test");
+        DatabaseReference mChildref = mRootRef.child("jaar1").child("IARCH");
 
         final TextView tv = (TextView) findViewById(R.id.tv);
 
-        mChildref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                tv.setText(dataSnapshot.getValue().toString());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        Log.d("DEBUG", mChildref.toString() + ".json");
 
     }
 }
