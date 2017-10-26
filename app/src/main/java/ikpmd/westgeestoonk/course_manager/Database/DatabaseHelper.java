@@ -9,12 +9,16 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import android.util.Log;
 
+import java.util.ArrayList;
+
+import ikpmd.westgeestoonk.course_manager.Models.Course_Model;
+
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static SQLiteDatabase mSQLDB;
     private static DatabaseHelper mInstance;
     public static String dbName;
-    public static final int dbVersion = 10;
+    public static final int dbVersion = 12;
 
     public DatabaseHelper(Context ctx, String dbName) {
         super(ctx, dbName, null, dbVersion);
@@ -64,6 +68,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor query(String table, String[] columns, String selection, String[] selectArgs, String groupBy, String having, String orderBy) {
         return mSQLDB.query(table, columns, selection, selectArgs, groupBy, having, orderBy);
+    }
+
+    public ArrayList<Course_Model> getCoursesJaar(int jaar) {
+        ArrayList<Course_Model> courses = new ArrayList<>();
+        String sql = "SELECT * FROM " + DatabaseInfo.CourseTables.COURSE + " WHERE jaar=" + jaar;
+
+        Cursor cs = mSQLDB.rawQuery(sql, null);
+        //cs.moveToFirst();
+        while(cs.moveToNext()) {
+            Log.wtf("DEBUG", cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.NAAM)));
+            courses.add(new Course_Model(cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.NAAM)),
+                                        cs.getInt(cs.getColumnIndex(DatabaseInfo.CourseColumn.EC)),
+                                        cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.VAKCODE)),
+                                        cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.TOETSING)),
+                                        cs.getInt(cs.getColumnIndex(DatabaseInfo.CourseColumn.PERIODE)),
+                                        cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.TOETSMOMENT)),
+                                        cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.CIJFER)),
+                                        cs.getInt(cs.getColumnIndex(DatabaseInfo.CourseColumn.JAAR))));
+        }
+
+        return courses;
     }
 
 }

@@ -124,24 +124,16 @@ public class MainActivity extends AppCompatActivity {
 
         Type type = new TypeToken<Course_Model>(){}.getType();
         String url = rootRef.toString();
-        Object[] courseKeysJaar1 = null;
-        Object[] courseKeysJaar2 = null;
-        Object[] courseKeysJaar3 = null;
-        Object[] courseKeysJaar4 = null;
+        Object[] courseKeys = null;
 
-        int j = 1; //TODO naar 4 zeten zodra alle vakken er in staan
         // Haalt alle keys op om een webrequest naar te doen.
         for (Map.Entry<String, Object> entry : snapshot.entrySet()){
             Map singleCourse = (Map) entry.getValue();
-            if(j == 1) courseKeysJaar1 = singleCourse.keySet().toArray();
-            else if(j == 2) courseKeysJaar2 = singleCourse.keySet().toArray();
-            else if(j == 3) courseKeysJaar3 = singleCourse.keySet().toArray();
-            else if(j == 4) courseKeysJaar4 = singleCourse.keySet().toArray();
-            j--;
+            courseKeys = singleCourse.keySet().toArray();
         }
-        url = rootRef.toString() + "/jaar1/";
+        url = rootRef.toString() + "/vakken/";
         Log.d("DEBUG", "Objecten ophalen vanaf " + url);
-        for(Object o : courseKeysJaar1) {
+        for(Object o : courseKeys) {
             GsonRequest<Course_Model> request = new GsonRequest<Course_Model>(url + o.toString() + ".json", type, null, new Response.Listener<Course_Model>() {
                 @Override
                 public void onResponse(Course_Model response) {
@@ -154,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addCourseToDatabase(Course_Model course) {
-        Log.wtf("DEBUG", course.getNaam());
         ContentValues cv = new ContentValues();
         cv.put(DatabaseInfo.CourseColumn.NAAM, course.getNaam());
         cv.put(DatabaseInfo.CourseColumn.EC, course.getEC());
