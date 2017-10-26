@@ -1,9 +1,11 @@
 package ikpmd.westgeestoonk.course_manager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -35,12 +37,21 @@ public class VakkenOverzichtActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         databaseHelper = databaseHelper.getHelper(this, fAuth.getUid());
         uploadCijfers();
-        ArrayList<Course_Model> courses = databaseHelper.getAllCourses();
+        final ArrayList<Course_Model> courses = databaseHelper.getAllCourses();
         lv = (ListView) findViewById(R.id.listview);
 
         cAdapter = new CourseListAdapter(getApplicationContext(), 0, courses);
         lv.setAdapter(cAdapter);
-
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(),VakInfo.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("course", courses.get(position));
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
 
 
 

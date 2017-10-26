@@ -4,6 +4,8 @@ import android.content.Context;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
+
 import ikpmd.westgeestoonk.course_manager.Database.DatabaseHelper;
 import ikpmd.westgeestoonk.course_manager.Enums.Toetsing;
 
@@ -11,7 +13,7 @@ import ikpmd.westgeestoonk.course_manager.Enums.Toetsing;
  * Created by Joep Oonk on 25-Oct-17.
  */
 
-public class Course_Model {
+public class Course_Model implements Serializable{
     private String naam;
     private int ec;
     private String vakcode;
