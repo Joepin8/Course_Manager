@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         fAuth = FirebaseAuth.getInstance();
 
-
-
         emailEditText = (EditText) findViewById(R.id.emailET);
         passwordEditText = (EditText) findViewById(R.id.passwordET);
         loginBtn = (Button) findViewById(R.id.loginBtn);
@@ -94,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         newAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), NieuwAccount.class);
+                Intent intent = new Intent(getApplicationContext(), NieuwAccountActivity.class);
                 startActivity(intent);
             }
         });

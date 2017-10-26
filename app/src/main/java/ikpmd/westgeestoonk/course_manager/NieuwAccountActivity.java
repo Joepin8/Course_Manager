@@ -15,7 +15,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class NieuwAccount extends AppCompatActivity {
+public class NieuwAccountActivity extends AppCompatActivity {
 
     private EditText emailEditText;
     private EditText passwordEditText;
@@ -49,6 +49,7 @@ public class NieuwAccount extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "Account aangemaakt", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intent);
+                                fAuth.signOut();
                             } else {
                                 Toast.makeText(getApplicationContext(), "Kon account niet aanmaken", Toast.LENGTH_SHORT).show();
                             }
