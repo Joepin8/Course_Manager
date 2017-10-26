@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fAuth = FirebaseAuth.getInstance();
+        databaseHelper = databaseHelper.getHelper(this, fAuth.getUid());
         setTitle("Inloggen");
         emailEditText = (EditText) findViewById(R.id.emailET);
         passwordEditText = (EditText) findViewById(R.id.passwordET);
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         newAccountBtn.setText("Nieuw account");
         tvEmail.setText("Email:");
         tvWachtwoord.setText("Wachtwoord:");
-        emailEditText.setText(" ");
+        emailEditText.setText("");
         fAuth.signOut();
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,8 +78,9 @@ public class MainActivity extends AppCompatActivity {
                             if(task.isSuccessful()) {
                                 Log.d("DEBUG", "ingelogd");
                                 Toast.makeText(getApplicationContext(), "Ingelogd", Toast.LENGTH_SHORT).show();
-                                initiateDatabaseMetUserID(fAuth.getCurrentUser().getUid());
                                 getAllCourses();
+                                Intent intent = new Intent(getApplicationContext(), VakkenOverzichtActivity.class);
+                                startActivity(intent);
                             } else {
                                 Toast.makeText(getApplicationContext(), "Inloggen mislukt", Toast.LENGTH_SHORT).show();
                             }
@@ -98,12 +100,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void initiateDatabaseMetUserID(String uid) {
-        databaseHelper = databaseHelper.getHelper(this, uid);
-    }
-
     private void getAllCourses() {
-        rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference childRef = rootRef.child("vakken");
+        childRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 getCourses((Map<String, Object>) dataSnapshot.getValue());
@@ -128,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             Map singleCourse = (Map) entry.getValue();
             courseKeys = singleCourse.keySet().toArray();
         }
-        url = rootRef.toString() + "/vakken/";
+        url = rootRef.toString() + "/vakken/vakken/";
         Log.d("DEBUG", "Objecten ophalen vanaf " + url);
         for(Object o : courseKeys) {
             GsonRequest<Course_Model> request = new GsonRequest<Course_Model>(url + o.toString() + ".json", type, null, new Response.Listener<Course_Model>() {
@@ -139,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
             });
             VolleyHelper.getInstance(this).addToRequestQueue(request);
         }
+
 
     }
 

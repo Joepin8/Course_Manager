@@ -1,5 +1,8 @@
 package ikpmd.westgeestoonk.course_manager.Models;
 
+import android.content.Context;
+
+import ikpmd.westgeestoonk.course_manager.Database.DatabaseHelper;
 import ikpmd.westgeestoonk.course_manager.Enums.Toetsing;
 
 /**
@@ -15,6 +18,8 @@ public class Course_Model {
     private String toetsmoment;
     private String cijfer;
     private int jaar;
+
+    private DatabaseHelper databaseHelper;
 
     public Course_Model(String naam, int EC, String vakcode, Toetsing toetsing, int periode, String toetsmoment, String cijfer, int jaar) {
         this.naam = naam;
@@ -66,8 +71,11 @@ public class Course_Model {
         return cijfer;
     }
 
-    public void setCijfer(String cijfer) {
+    public void setCijfer(String cijfer, Context ctx, String uid) {
         this.cijfer = cijfer;
+        databaseHelper = databaseHelper.getHelper(ctx, uid);
+        databaseHelper.updateCijfer(this);
+
     }
 
 

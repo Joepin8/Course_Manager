@@ -18,7 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static SQLiteDatabase mSQLDB;
     private static DatabaseHelper mInstance;
     public static String dbName;
-    public static final int dbVersion = 12;
+    public static final int dbVersion = 13;
 
     public DatabaseHelper(Context ctx, String dbName) {
         super(ctx, dbName, null, dbVersion);
@@ -89,6 +89,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return courses;
+    }
+
+    public ArrayList<Course_Model> getAllCourses() {
+        ArrayList<Course_Model> courses = new ArrayList<>();
+
+
+        Cursor cs = mSQLDB.query(DatabaseInfo.CourseTables.COURSE, new String[]{"*"}, null, null, null, null, null);
+        //cs.moveToFirst();
+        while(cs.moveToNext()) {
+            courses.add(new Course_Model(cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.NAAM)),
+                    cs.getInt(cs.getColumnIndex(DatabaseInfo.CourseColumn.EC)),
+                    cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.VAKCODE)),
+                    cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.TOETSING)),
+                    cs.getInt(cs.getColumnIndex(DatabaseInfo.CourseColumn.PERIODE)),
+                    cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.TOETSMOMENT)),
+                    cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.CIJFER)),
+                    cs.getInt(cs.getColumnIndex(DatabaseInfo.CourseColumn.JAAR))));
+        }
+
+        return courses;
+    }
+
+    public void updateCijfer(Course_Model course) {
+        ContentValues cv = new ContentValues();
+        cv.put(DatabaseInfo.CourseColumn.CIJFER, course.getCijfer());
+        mSQLDB.update(DatabaseInfo.CourseTables.COURSE, cv, DatabaseInfo.CourseColumn.VAKCODE + "=\"" + course.getVakcode() + "\"", null);
     }
 
 }

@@ -45,7 +45,7 @@ public class NieuwAccountActivity extends AppCompatActivity {
         emailTV.setText("Email:");
         wachtwoordTV.setText("Wachtwoord:");
 
-        emailEditText.setText(" ");
+        emailEditText.setText("");
 
         createAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
