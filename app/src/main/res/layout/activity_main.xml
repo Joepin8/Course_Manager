@@ -42,52 +42,46 @@
         android:id="@+id/loginBtn"
         android:layout_width="138dp"
         android:layout_height="48dp"
-        android:text="Button"
-        tools:text="Inloggen"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/newAccountBtn"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintLeft_creator="1"
         android:layout_marginBottom="29dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:text="Inloggen"
+        app:layout_constraintBottom_toTopOf="@+id/newAccountBtn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
 
     <TextView
         android:id="@+id/tvEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:text="E-mail"
-        tools:layout_constraintTop_creator="1"
         android:layout_marginTop="102dp"
-        tools:layout_constraintLeft_creator="1"
+        android:text="E-mail"
         app:layout_constraintLeft_toLeftOf="@+id/emailET"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
     <TextView
         android:id="@+id/tvWachtwoord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:text="Wachtwoord"
-        tools:layout_constraintBottom_creator="1"
+        android:text="Wachtwoord"
         app:layout_constraintBottom_toTopOf="@+id/passwordET"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/passwordET" />
+        app:layout_constraintLeft_toLeftOf="@+id/passwordET"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1" />
 
     <Button
         android:id="@+id/newAccountBtn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="123dp"
-        android:text="Button"
-        tools:text="Nieuw account"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        android:layout_marginStart="123dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintLeft_creator="1"
+        android:layout_width="138dp"
+        android:layout_height="48dp"
         android:layout_marginBottom="61dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:text="Nieuw Account"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
 </android.support.constraint.ConstraintLayout>
