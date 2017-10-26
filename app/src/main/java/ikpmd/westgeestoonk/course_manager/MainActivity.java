@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         newAccountBtn = (Button) findViewById(R.id.newAccountBtn);
         tvEmail = (TextView) findViewById(R.id.tvEmail);
         tvWachtwoord = (TextView) findViewById(R.id.tvWachtwoord);
-
+        
         loginBtn.setText("Inloggen");
         newAccountBtn.setText("Nieuw account");
         tvEmail.setText("Email:");
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                             if(task.isSuccessful()) {
                                 Log.d("DEBUG", "ingelogd");
                                 Toast.makeText(getApplicationContext(), "Ingelogd", Toast.LENGTH_SHORT).show();
-                                getAllCourses();
+                                 getAllCourses();
                                 Intent intent = new Intent(getApplicationContext(), VakkenOverzichtActivity.class);
                                 startActivity(intent);
                             } else {
