@@ -18,7 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static SQLiteDatabase mSQLDB;
     private static DatabaseHelper mInstance;
     public static String dbName;
-    public static final int dbVersion = 13;
+    public static final int dbVersion = 15;
 
     public DatabaseHelper(Context ctx, String dbName) {
         super(ctx, dbName, null, dbVersion);
@@ -75,9 +75,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String sql = "SELECT * FROM " + DatabaseInfo.CourseTables.COURSE + " WHERE jaar=" + jaar;
 
         Cursor cs = mSQLDB.rawQuery(sql, null);
-        //cs.moveToFirst();
         while(cs.moveToNext()) {
-            Log.wtf("DEBUG", cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.NAAM)));
             courses.add(new Course_Model(cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.NAAM)),
                                         cs.getInt(cs.getColumnIndex(DatabaseInfo.CourseColumn.EC)),
                                         cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.VAKCODE)),
@@ -96,7 +94,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         Cursor cs = mSQLDB.query(DatabaseInfo.CourseTables.COURSE, new String[]{"*"}, null, null, null, null, null);
-        //cs.moveToFirst();
         while(cs.moveToNext()) {
             courses.add(new Course_Model(cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.NAAM)),
                     cs.getInt(cs.getColumnIndex(DatabaseInfo.CourseColumn.EC)),

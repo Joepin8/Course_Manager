@@ -2,6 +2,8 @@ package ikpmd.westgeestoonk.course_manager.Models;
 
 import android.content.Context;
 
+import org.jetbrains.annotations.NotNull;
+
 import ikpmd.westgeestoonk.course_manager.Database.DatabaseHelper;
 import ikpmd.westgeestoonk.course_manager.Enums.Toetsing;
 
@@ -11,7 +13,7 @@ import ikpmd.westgeestoonk.course_manager.Enums.Toetsing;
 
 public class Course_Model {
     private String naam;
-    private int EC;
+    private int ec;
     private String vakcode;
     private Toetsing toetsing;
     private int periode;
@@ -21,20 +23,9 @@ public class Course_Model {
 
     private DatabaseHelper databaseHelper;
 
-    public Course_Model(String naam, int EC, String vakcode, Toetsing toetsing, int periode, String toetsmoment, String cijfer, int jaar) {
+    public Course_Model(@NotNull String naam, int ec, String vakcode, String toetsing, int periode, String toetsmoment, String cijfer, int jaar) {
         this.naam = naam;
-        this.EC = EC;
-        this.vakcode = vakcode;
-        this.toetsing = toetsing;
-        this.periode = periode;
-        this.toetsmoment = toetsmoment;
-        this.cijfer = cijfer;
-        this.jaar = jaar;
-    }
-
-    public Course_Model(String naam, int EC, String vakcode, String toetsing, int periode, String toetsmoment, String cijfer, int jaar) {
-        this.naam = naam;
-        this.EC = EC;
+        this.ec = ec;
         this.vakcode = vakcode;
         this.toetsing = Toetsing.valueOf(toetsing);
         this.periode = periode;
@@ -48,7 +39,7 @@ public class Course_Model {
     }
 
     public int getEC() {
-        return EC;
+        return ec;
     }
 
     public String getVakcode() {

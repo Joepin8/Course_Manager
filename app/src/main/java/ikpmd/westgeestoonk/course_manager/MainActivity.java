@@ -134,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Course_Model response) {
                     addCourseToDatabase(response);
+                    Log.wtf("DEBUG", "vak: " + response.getVakcode() + " EC: " + response.getEC());
                 }
             });
             VolleyHelper.getInstance(this).addToRequestQueue(request);
@@ -144,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void addCourseToDatabase(Course_Model course) {
         ContentValues cv = new ContentValues();
+
         cv.put(DatabaseInfo.CourseColumn.NAAM, course.getNaam());
         cv.put(DatabaseInfo.CourseColumn.EC, course.getEC());
         cv.put(DatabaseInfo.CourseColumn.VAKCODE, course.getVakcode());
