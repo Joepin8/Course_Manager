@@ -14,8 +14,9 @@ public class Course_Model {
     private int periode;
     private String toetsmoment;
     private String cijfer;
+    private int jaar;
 
-    public Course_Model(String naam, int EC, String vakcode, Toetsing toetsing, int periode, String toetsmoment, String cijfer) {
+    public Course_Model(String naam, int EC, String vakcode, Toetsing toetsing, int periode, String toetsmoment, String cijfer, int jaar) {
         this.naam = naam;
         this.EC = EC;
         this.vakcode = vakcode;
@@ -23,6 +24,18 @@ public class Course_Model {
         this.periode = periode;
         this.toetsmoment = toetsmoment;
         this.cijfer = cijfer;
+        this.jaar = jaar;
+    }
+
+    public Course_Model(String naam, int EC, String vakcode, String toetsing, int periode, String toetsmoment, String cijfer, int jaar) {
+        this.naam = naam;
+        this.EC = EC;
+        this.vakcode = vakcode;
+        this.toetsing = Toetsing.valueOf(toetsing);
+        this.periode = periode;
+        this.toetsmoment = toetsmoment;
+        this.cijfer = cijfer;
+        this.jaar = jaar;
     }
 
     public String getNaam() {
@@ -55,5 +68,10 @@ public class Course_Model {
 
     public void setCijfer(String cijfer) {
         this.cijfer = cijfer;
+    }
+
+
+    public int getJaar() {
+        return jaar;
     }
 }

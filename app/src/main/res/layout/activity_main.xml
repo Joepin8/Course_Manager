@@ -19,7 +19,7 @@
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/tvEmail"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -53,7 +53,7 @@
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
@@ -65,7 +65,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvWachtwoord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"

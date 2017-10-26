@@ -17,6 +17,7 @@ public class DatabaseInfo {
         public static final String PERIODE = "Periode";
         public static final String TOETSMOMENT = "Toetsmoment";
         public static final String CIJFER = "Cijfer";
+        public static final String JAAR = "Jaar";
     }
 
 }

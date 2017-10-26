@@ -18,7 +18,7 @@
         tools:text="E-mail"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintBottom_toTopOf="@+id/tvWachtwoord"
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintLeft_creator="1"
         android:layout_marginBottom="23dp"
@@ -57,27 +57,28 @@
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        tools:text="E-mail"
-        tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toTopOf="@+id/emailET"
+        app:layout_constraintLeft_toLeftOf="@+id/emailET"
+        tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/emailET" />
+        tools:text="E-mail" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvWachtwoord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
         tools:text="Wachtwoord"
         tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="185dp"
+        android:layout_marginTop="184dp"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="@+id/passwordET"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="0dp" />
 
     <Button
         android:id="@+id/cancelBtn"

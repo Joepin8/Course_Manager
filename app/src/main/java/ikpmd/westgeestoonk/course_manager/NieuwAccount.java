@@ -26,7 +26,7 @@ public class NieuwAccount extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_account);
+        setContentView(R.layout.activity_nieuw_account);
 
         emailEditText = (EditText) findViewById(R.id.emailET);
         passwordEditText = (EditText) findViewById(R.id.passwordET);

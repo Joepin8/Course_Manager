@@ -5,4 +5,14 @@ package ikpmd.westgeestoonk.course_manager.Enums;
  */
 
 public enum Toetsing {
+    Assessment,
+    Schriftelijk,
+    Praktijkopdracht,
+    Projectoplevering,
+    Portfolio,
+    Verslag,
+    Werkstuk,
+    Presentatie,
+    Certificaat,
+    Assesment_en_Schriftelijk
 }
