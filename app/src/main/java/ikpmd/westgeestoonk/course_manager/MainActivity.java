@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fAuth = FirebaseAuth.getInstance();
-
+        setTitle("Inloggen");
         emailEditText = (EditText) findViewById(R.id.emailET);
         passwordEditText = (EditText) findViewById(R.id.passwordET);
         loginBtn = (Button) findViewById(R.id.loginBtn);
@@ -62,8 +62,7 @@ public class MainActivity extends AppCompatActivity {
         newAccountBtn.setText("Nieuw account");
         tvEmail.setText("Email:");
         tvWachtwoord.setText("Wachtwoord:");
-        emailEditText.setText("email");
-
+        emailEditText.setText(" ");
         fAuth.signOut();
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
