@@ -13,17 +13,17 @@ import android.util.Log;
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static SQLiteDatabase mSQLDB;
     private static DatabaseHelper mInstance;
-    public static final String dbName = "LocalCourses.db";
-    public static final int dbVersion = 9;
+    public static String dbName;
+    public static final int dbVersion = 10;
 
-    public DatabaseHelper(Context ctx) {
+    public DatabaseHelper(Context ctx, String dbName) {
         super(ctx, dbName, null, dbVersion);
     }
 
 
-    public static synchronized DatabaseHelper getHelper(Context ctx) {
+    public static synchronized DatabaseHelper getHelper(Context ctx, String dbName) {
         if (mInstance == null) {
-            mInstance = new DatabaseHelper(ctx);
+            mInstance = new DatabaseHelper(ctx, dbName + ".db");
             mSQLDB = mInstance.getWritableDatabase();
         }
         return mInstance;

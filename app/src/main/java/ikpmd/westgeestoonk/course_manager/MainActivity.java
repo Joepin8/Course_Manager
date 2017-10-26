@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         fAuth = FirebaseAuth.getInstance();
 
-        databaseHelper = databaseHelper.getHelper(this);
+
 
         emailEditText = (EditText) findViewById(R.id.emailET);
         passwordEditText = (EditText) findViewById(R.id.passwordET);
@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         tvWachtwoord.setText("Wachtwoord:");
         emailEditText.setText("email");
 
-        getAllCourses();
         fAuth.signOut();
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +80,8 @@ public class MainActivity extends AppCompatActivity {
                             if(task.isSuccessful()) {
                                 Log.d("DEBUG", "ingelogd");
                                 Toast.makeText(getApplicationContext(), "Ingelogd", Toast.LENGTH_SHORT).show();
-
+                                initiateDatabaseMetUserID(fAuth.getCurrentUser().getUid());
+                                getAllCourses();
                             } else {
                                 Toast.makeText(getApplicationContext(), "Inloggen mislukt", Toast.LENGTH_SHORT).show();
                             }
@@ -101,9 +101,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void getAllCourses() {
-        String[] courses = new String[]{"IARCH", "ICOMMP"};
+    private void initiateDatabaseMetUserID(String uid) {
+        databaseHelper = databaseHelper.getHelper(this, uid);
+    }
 
+    private void getAllCourses() {
         rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
