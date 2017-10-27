@@ -3,11 +3,14 @@ package ikpmd.westgeestoonk.course_manager;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -31,6 +34,7 @@ public class VakInfo extends AppCompatActivity implements AdapterView.OnItemSele
     private TextView Toetsmoment;
     private Spinner TekstCijfer;
     private EditText DecimaalCijfer;
+    private Button Opslaan;
 
 
     @Override
@@ -49,8 +53,9 @@ public class VakInfo extends AppCompatActivity implements AdapterView.OnItemSele
         Periode = (TextView) findViewById(R.id.Periode);
         Toetsing = (TextView) findViewById(R.id.Toetsing);
         Toetsmoment = (TextView) findViewById(R.id.ToetsMoment);
-        Spinner TekstCijfer = (Spinner) findViewById(R.id.TekstCijfer);
-        EditText DecimaalCijfer = (EditText) findViewById(R.id.DecimaalCijfer);
+        TekstCijfer = (Spinner) findViewById(R.id.TekstCijfer);
+        DecimaalCijfer = (EditText) findViewById(R.id.DecimaalCijfer);
+        Opslaan = (Button) findViewById(R.id.Opslaan);
 
         Vaktitel.setText(vak.getNaam());
         EC.setText(String.valueOf(vak.getEC()));
@@ -63,6 +68,8 @@ public class VakInfo extends AppCompatActivity implements AdapterView.OnItemSele
         // Spinner click listener
         TekstCijfer.setOnItemSelectedListener(this);
 
+
+
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
         categories.add("Geen Cijfer");
@@ -72,7 +79,7 @@ public class VakInfo extends AppCompatActivity implements AdapterView.OnItemSele
 
 
               // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, categories);
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -85,11 +92,25 @@ public class VakInfo extends AppCompatActivity implements AdapterView.OnItemSele
                 vak.getToetsing().equals(ikpmd.westgeestoonk.course_manager.Enums.Toetsing.Projectoplevering)||
                 vak.getToetsing().equals(ikpmd.westgeestoonk.course_manager.Enums.Toetsing.Assessment)){
             DecimaalCijfer.setVisibility(View.GONE);
+            Opslaan.setVisibility(View.GONE);
+
+
 
         }
         else{
             TekstCijfer.setVisibility(View.GONE);
         }
+
+        DecimaalCijfer.setText(vak.getCijfer());
+        Opslaan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                vak.setCijfer(DecimaalCijfer.getText().toString(), getApplicationContext(), FirebaseAuth.getInstance().getUid());
+                findViewById(R.id.mainLayout).requestFocus();
+            }
+        });
+
+
         switch(vak.getCijfer()){
             case "Geen cijfer": TekstCijfer.setSelection(0);
                                 break;
@@ -97,7 +118,6 @@ public class VakInfo extends AppCompatActivity implements AdapterView.OnItemSele
                                 break;
             case "Onvoldoende": TekstCijfer.setSelection(2);
         }
-
     }
 
     @Override

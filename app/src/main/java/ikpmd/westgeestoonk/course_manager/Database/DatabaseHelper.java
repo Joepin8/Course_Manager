@@ -107,6 +107,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         mSQLDB.update(DatabaseInfo.CourseTables.COURSE, cv, DatabaseInfo.CourseColumn.VAKCODE + "=\"" + course.getVakcode() + "\"", null);
     }
 
+
 }
 
 

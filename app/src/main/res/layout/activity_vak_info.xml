@@ -4,14 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     tools:context="ikpmd.westgeestoonk.course_manager.VakInfo"
     tools:layout_editor_absoluteY="81dp">
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/mainLayout"
+        android:descendantFocusability="beforeDescendants"
         android:layout_width="0dp"
         android:layout_height="209dp"
         android:orientation="horizontal"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -156,32 +160,52 @@
 
     <Spinner
         android:id="@+id/TekstCijfer"
-        android:layout_width="151dp"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="164dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.672"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        app:layout_constraintVertical_bias="0.481" />
+        app:layout_constraintVertical_bias="0.47" />
 
     <EditText
         android:id="@+id/DecimaalCijfer"
         android:layout_width="149dp"
         android:layout_height="131dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="108dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="numberDecimal"
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textSize="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+    <Button
+        android:id="@+id/Opslaan"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="190dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@android:color/holo_blue_dark"
+        android:onClick="SlaOp"
+        android:text="Opslaan"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+        app:layout_constraintTop_toBottomOf="@+id/DecimaalCijfer" />
 
 </android.support.constraint.ConstraintLayout>
