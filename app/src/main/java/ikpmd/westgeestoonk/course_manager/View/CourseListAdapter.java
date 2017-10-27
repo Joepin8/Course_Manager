@@ -18,7 +18,7 @@ import java.util.List;
 import ikpmd.westgeestoonk.course_manager.Models.Course_Model;
 import ikpmd.westgeestoonk.course_manager.R;
 
-public class CourseListAdapter extends ArrayAdapter<Course_Model> implements Filterable {
+public class CourseListAdapter extends ArrayAdapter<Course_Model> {
 
     public CourseListAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Course_Model> objects) {
         super(context, resource, objects);

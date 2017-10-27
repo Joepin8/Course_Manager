@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.ListView;
 
 
@@ -19,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import ikpmd.westgeestoonk.course_manager.Database.DatabaseHelper;
@@ -32,6 +34,7 @@ public class VakkenOverzichtActivity extends AppCompatActivity {
     private ListView lv;
     private CourseListAdapter cAdapter;
     private EditText zoekVeld;
+    private ArrayList<Course_Model> courses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,25 +44,63 @@ public class VakkenOverzichtActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         databaseHelper = databaseHelper.getHelper(this, fAuth.getUid());
         uploadCijfers();
-        final ArrayList<Course_Model> courses = databaseHelper.getAllCourses();
         lv = (ListView) findViewById(R.id.listview);
         zoekVeld = (EditText) findViewById(R.id.zoekVeld);
+        initList();
 
-        cAdapter = new CourseListAdapter(getApplicationContext(), 0, courses);
-        lv.setAdapter(cAdapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(),VakInfo.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("course", courses.get(position));
-                intent.putExtras(bundle);
-                startActivity(intent);
+                openVakInfoVoorVak(position);
             }
         });
 
+        zoekVeld.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
 
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.toString().equals("")) {
+                    initList(); //Reset de listView
+                } else {
+                    zoekItems(charSequence.toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+    }
+
+    private void zoekItems(String s) {
+        for(Iterator<Course_Model> iterator = courses.iterator(); iterator.hasNext(); ) {
+            Course_Model c = iterator.next();
+            if(!c.getNaam().toLowerCase().contains(s)) {
+                iterator.remove();
+            }
+        }
+
+        cAdapter.notifyDataSetChanged();
+    }
+
+    public void openVakInfoVoorVak(int i) {
+        Intent intent = new Intent(getApplicationContext(),VakInfo.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("course", courses.get(i));
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    public void initList() {
+        courses = databaseHelper.getAllCourses();
+        cAdapter = new CourseListAdapter(getApplicationContext(), 0, courses);
+        lv.setAdapter(cAdapter);
     }
 
     public void uploadCijfers() {
