@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 
 import ikpmd.westgeestoonk.course_manager.Database.DatabaseHelper;
 import ikpmd.westgeestoonk.course_manager.Models.Course_Model;
+import ikpmd.westgeestoonk.course_manager.View.CourseListAdapter;
 
 
 public class ECOverzichtActivity extends AppCompatActivity {
@@ -28,6 +31,10 @@ public class ECOverzichtActivity extends AppCompatActivity {
     private final int MAX_EC = 240;
     private int behaaldeEc;
     private ArrayList<Course_Model> courses;
+    private ArrayList<Course_Model> nogTeHalenCourses = new ArrayList<>();
+    private TextView tvTeHalen;
+    private ListView lv;
+    private CourseListAdapter cAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +46,13 @@ public class ECOverzichtActivity extends AppCompatActivity {
         courses = databaseHelper.getAllCourses();
         chart = (PieChart) findViewById(R.id.chart);
         behaaldeEc = berekenBehaaldeEC();
-
+        lv = (ListView) findViewById(R.id.lvCourses);
+        tvTeHalen = (TextView) findViewById(R.id.tvHalen);
         setupChart();
+        tvTeHalen.setText("Je moet nog voor " + nogTeHalenCourses.size() + " vak(ken) slagen.");
 
+        cAdapter = new CourseListAdapter(getApplicationContext(), 0, nogTeHalenCourses);
+        lv.setAdapter(cAdapter);
 
     }
 
@@ -49,14 +60,17 @@ public class ECOverzichtActivity extends AppCompatActivity {
         int ec = 0;
         for(Course_Model c : courses) {
             if(c.isGehaald()) ec += c.getEC();
+            else
+                nogTeHalenCourses.add(c);
         }
         return ec;
     }
 
     private void setupChart() {
         chart.setTouchEnabled(false);
-        chart.getDescription().setText("Er zijn in totaal 240 EC's te halen");
+        chart.getDescription().setText(" ");
         chart.getDescription().setTextSize(24);
+        chart.getLegend().setEnabled(false);
         chart.setDrawSlicesUnderHole(true);
         chart.setTransparentCircleAlpha(Color.rgb(130, 130, 130));
         chart.animateY(1400, Easing.EasingOption.EaseInOutQuad);

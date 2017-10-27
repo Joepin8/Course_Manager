@@ -40,13 +40,6 @@ public class NieuwAccountActivity extends AppCompatActivity {
         emailTV = (TextView) findViewById(R.id.tvEmail);
         wachtwoordTV = (TextView) findViewById(R.id.tvWachtwoord);
 
-        createAccountBtn.setText("Account aanmaken");
-        cancelBtn.setText("Annuleren");
-        emailTV.setText("Email:");
-        wachtwoordTV.setText("Wachtwoord:");
-
-        emailEditText.setText("");
-
         createAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

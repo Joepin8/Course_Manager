@@ -58,12 +58,7 @@ public class MainActivity extends AppCompatActivity {
         newAccountBtn = (Button) findViewById(R.id.newAccountBtn);
         tvEmail = (TextView) findViewById(R.id.tvEmail);
         tvWachtwoord = (TextView) findViewById(R.id.tvWachtwoord);
-        
-        loginBtn.setText("Inloggen");
-        newAccountBtn.setText("Nieuw account");
-        tvEmail.setText("Email:");
-        tvWachtwoord.setText("Wachtwoord:");
-        emailEditText.setText("");
+
         fAuth.signOut();
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                             if(task.isSuccessful()) {
                                 databaseHelper = databaseHelper.getHelper(getApplicationContext(), fAuth.getUid());
                                 getAllCourses();
+                                getAllCijfers();
                                 Log.d("DEBUG", "ingelogd");
                                 Toast.makeText(getApplicationContext(), "Ingelogd", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), VakkenOverzichtActivity.class);
@@ -158,6 +154,55 @@ public class MainActivity extends AppCompatActivity {
         cv.put(DatabaseInfo.CourseColumn.KEUZEVAK, keuzevak);
 
         databaseHelper.insert(DatabaseInfo.CourseTables.COURSE, null, cv);
+    }
+
+    private void getAllCijfers() {
+
+        DatabaseReference childRef = rootRef.child("gebruikers");
+        childRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                requestAllCijfers((Map<String, Object>) dataSnapshot.getValue());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void requestAllCijfers(Map<String, Object> ds) {
+
+        Type type = new TypeToken<String>(){}.getType();
+        String url = rootRef.toString();
+        Object[] courseKeys = null;
+        // Haalt alle keys op om een webrequest naar te doen.
+        for (Map.Entry<String, Object> entry : ds.entrySet()){
+            Map singleCourse = (Map) entry.getValue();
+            courseKeys = singleCourse.keySet().toArray();
+        }
+        url = rootRef.toString() + "/gebruikers/" + fAuth.getUid() + "/";
+        Log.d("DEBUG", "Objecten ophalen vanaf " + url);
+        for(final Object o : courseKeys) {
+            GsonRequest<String> request = new GsonRequest<String>(url + o.toString() + ".json", type, null, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    setAllCijfers(o, response);
+                }
+            });
+            VolleyHelper.getInstance(this).addToRequestQueue(request);
+        }
+
+    }
+
+    private void setAllCijfers(Object o, String s) {
+        for(Course_Model c : databaseHelper.getAllCourses()) {
+            if(c.getVakcode().equals(o.toString())) {
+                c.setCijfer(s, getApplicationContext(), fAuth.getUid());
+            }
+        }
     }
 
 }
