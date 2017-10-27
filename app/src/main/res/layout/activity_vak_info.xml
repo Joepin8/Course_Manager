@@ -103,6 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:lineSpacingExtra="18sp"
+                android:lines="2"
                 android:text="Vaktitel"
                 android:textAlignment="textEnd"
                 android:textSize="18sp"
@@ -168,5 +169,20 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="77dp"
+        android:layout_height="72dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        app:layout_constraintVertical_bias="0.074" />
 
 </android.support.constraint.ConstraintLayout>
