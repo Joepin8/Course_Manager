@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                             if(task.isSuccessful()) {
                                 databaseHelper = databaseHelper.getHelper(getApplicationContext(), fAuth.getUid());
                                 getAllCourses();
-                                getAllCijfers();
+//                                getAllCijfers();
                                 Log.d("DEBUG", "ingelogd");
                                 Toast.makeText(getApplicationContext(), "Ingelogd", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), VakkenOverzichtActivity.class);
