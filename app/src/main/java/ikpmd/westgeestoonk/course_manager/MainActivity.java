@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()) {
                                 databaseHelper = databaseHelper.getHelper(getApplicationContext(), fAuth.getUid());
-                                databaseHelper.addColumn();
                                 getAllCourses();
                                 Log.d("DEBUG", "ingelogd");
                                 Toast.makeText(getApplicationContext(), "Ingelogd", Toast.LENGTH_SHORT).show();

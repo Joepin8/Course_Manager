@@ -11,7 +11,7 @@
 
     <TextView
         android:id="@+id/vak_naam"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="40dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
@@ -29,38 +29,42 @@
         tools:layout_constraintTop_creator="1" />
 
     <TextView
-        android:id="@+id/vak_cijfer"
-        android:layout_width="135dp"
+        android:id="@+id/vak_keuze"
+        android:layout_width="203dp"
         android:layout_height="40dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingTop="20dp"
-        android:text="Geen cijfer"
+        android:text="Dit is een keuzevak"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="12sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/vak_ec"
+        app:layout_constraintLeft_toRightOf="@+id/vak_ec"
         tools:layout_constraintBaseline_creator="1"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toRightOf="@+id/vak_ec" />
+        android:layout_marginLeft="0dp"
+        tools:layout_editor_absoluteX="180dp" />
 
     <TextView
         android:id="@+id/vak_jaar"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginStart="12dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingTop="20dp"
-        android:text="Jaar 1"
+        android:text="Jaar 1 of 2"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="12sp"
-        app:layout_constraintRight_toLeftOf="@+id/vak_ec"
-        tools:layout_constraintRight_creator="1"
         app:layout_constraintBaseline_toBaselineOf="@+id/vak_ec"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="@+id/vak_naam"
+        app:layout_constraintRight_toLeftOf="@+id/vak_ec"
         tools:layout_constraintBaseline_creator="1"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/vak_naam" />
+        tools:layout_constraintRight_creator="1"
+        tools:layout_editor_absoluteX="76dp" />
 
     <TextView
         android:id="@+id/vak_ec"

@@ -43,6 +43,7 @@ public class VakkenOverzichtActivity extends AppCompatActivity {
     private EditText zoekVeld;
     private ArrayList<Course_Model> courses;
     private Spinner spinnerJaar;
+    private TextView mijnEC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +57,17 @@ public class VakkenOverzichtActivity extends AppCompatActivity {
         lv = (ListView) findViewById(R.id.listview);
         zoekVeld = (EditText) findViewById(R.id.zoekVeld);
         spinnerJaar = (Spinner) findViewById(R.id.spinnerJaar);
+        mijnEC = (TextView) findViewById(R.id.mijnECs);
         initList();
         initSpinner();
+
+        mijnEC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ECOverzichtActivity.class);
+                startActivity(intent);
+            }
+        });
 
         spinnerJaar.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -112,7 +122,7 @@ public class VakkenOverzichtActivity extends AppCompatActivity {
 
     }
 
-    private void initSpinner() {
+    public void initSpinner() {
         List<String> jaren = new ArrayList<>(Arrays.asList("Alle jaren", "Jaar 1", "Jaar 2", "Jaar 3", "Jaar 4"));
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, jaren);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -130,11 +140,11 @@ public class VakkenOverzichtActivity extends AppCompatActivity {
         cAdapter.notifyDataSetChanged();
     }
 
-    public void filterVakkenVanJaar(String jaar) {
+    private void filterVakkenVanJaar(String jaar) {
         initList(); //Reset de listview zodat alle jaren er weer in staan
         for(Iterator<Course_Model> iterator = courses.iterator(); iterator.hasNext(); ) {
             Course_Model c = iterator.next();
-            if(!c.getJaar().equals(jaar)) {
+            if(!c.getJaar().contains(jaar)) {
                 iterator.remove();
             }
         }
@@ -142,21 +152,22 @@ public class VakkenOverzichtActivity extends AppCompatActivity {
         cAdapter.notifyDataSetChanged();
     }
 
-    public void openVakInfoVoorVak(int i) {
+    private void openVakInfoVoorVak(int i) {
         Intent intent = new Intent(getApplicationContext(),VakInfo.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("course", courses.get(i));
         intent.putExtras(bundle);
         startActivity(intent);
+        finish();
     }
 
-    public void initList() {
+    private void initList() {
         courses = databaseHelper.getAllCourses();
         cAdapter = new CourseListAdapter(getApplicationContext(), 0, courses);
         lv.setAdapter(cAdapter);
     }
 
-    public void uploadCijfers() {
+    private void uploadCijfers() {
         DatabaseReference gebruikerRef = FirebaseDatabase.getInstance().getReference().child("gebruikers").child(fAuth.getUid());
         Map<String, String> cijfers = new HashMap<String, String>();
         for(Course_Model c : databaseHelper.getAllCourses()) {

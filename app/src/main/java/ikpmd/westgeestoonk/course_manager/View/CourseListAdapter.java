@@ -35,7 +35,7 @@ public class CourseListAdapter extends ArrayAdapter<Course_Model> {
             vh.naam = (TextView) convertView.findViewById(R.id.vak_naam);
             vh.ec = (TextView) convertView.findViewById(R.id.vak_ec);
             vh.jaar = (TextView) convertView.findViewById(R.id.vak_jaar);
-            vh.cijfer = (TextView) convertView.findViewById(R.id.vak_cijfer);
+            vh.keuze = (TextView) convertView.findViewById(R.id.vak_keuze);
             convertView.setTag(vh);
         } else {
             vh = (ViewHolder) convertView.getTag();
@@ -44,7 +44,13 @@ public class CourseListAdapter extends ArrayAdapter<Course_Model> {
         vh.naam.setText(c.getNaam());
         vh.ec.setText("EC: " + String.valueOf(c.getEC()));
         vh.jaar.setText("Jaar " + c.getJaar());
-        vh.cijfer.setText(c.getCijfer());
+        if(c.isKeuzeVak()) {
+            vh.keuze.setText("Dit is een keuzevak");
+        } else {
+            vh.keuze.setText("");
+        }
+
+
 
         return convertView;
     }
@@ -53,7 +59,7 @@ public class CourseListAdapter extends ArrayAdapter<Course_Model> {
         TextView naam;
         TextView jaar;
         TextView ec;
-        TextView cijfer;
+        TextView keuze;
     }
 
 

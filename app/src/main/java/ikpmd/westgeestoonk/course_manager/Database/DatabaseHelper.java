@@ -18,7 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static SQLiteDatabase mSQLDB;
     private static DatabaseHelper mInstance;
     public static String dbName;
-    public static final int dbVersion = 26;
+    public static final int dbVersion = 28;
 
     public DatabaseHelper(Context ctx, String dbName) {
         super(ctx, dbName, null, dbVersion);
@@ -45,7 +45,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 DatabaseInfo.CourseColumn.PERIODE + " TEXT," +
                 DatabaseInfo.CourseColumn.TOETSMOMENT + " TEXT," +
                 DatabaseInfo.CourseColumn.CIJFER + " TEXT," +
-                DatabaseInfo.CourseColumn.JAAR + " INTEGER);"
+                DatabaseInfo.CourseColumn.JAAR + " INTEGER," +
+                DatabaseInfo.CourseColumn.KEUZEVAK + " INTEGER," +
+                DatabaseInfo.CourseColumn.NOTITIE + " INTEGER);"
         );
     }
 
@@ -103,11 +105,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         cv.put(DatabaseInfo.CourseColumn.NOTITIE, course.getNotitie());
         mSQLDB.update(DatabaseInfo.CourseTables.COURSE, cv, DatabaseInfo.CourseColumn.VAKCODE + "=\"" + course.getVakcode() + "\"", null);
-    }
-
-    public void addColumn() {
-        mSQLDB.execSQL("ALTER TABLE " + DatabaseInfo.CourseTables.COURSE + " ADD COLUMN " + DatabaseInfo.CourseColumn.KEUZEVAK + " INTEGER");
-        mSQLDB.execSQL("ALTER TABLE " + DatabaseInfo.CourseTables.COURSE + " ADD COLUMN " + DatabaseInfo.CourseColumn.NOTITIE + " TEXT");
     }
 
 }

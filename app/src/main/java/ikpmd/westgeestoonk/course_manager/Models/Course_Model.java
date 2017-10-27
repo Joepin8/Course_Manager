@@ -81,7 +81,6 @@ public class Course_Model implements Serializable {
         this.cijfer = cijfer;
         databaseHelper = databaseHelper.getHelper(ctx, uid);
         databaseHelper.updateCijfer(this);
-
     }
 
     public String getJaar() {
@@ -91,7 +90,6 @@ public class Course_Model implements Serializable {
     public Boolean isKeuzeVak() {
         return keuzevak == 0;
     }
-
 
     public String getNotitie() {
         return notitie;
@@ -103,5 +101,22 @@ public class Course_Model implements Serializable {
         databaseHelper.updateNotitie(this);
     }
 
+    public boolean isGehaald() {
+
+        if(this.cijfer.toLowerCase().equals("geen cijfer")){
+            return false;
+        } else if(this.cijfer.toLowerCase().equals("onvoldoende")) {
+            return false;
+        } else if(this.cijfer.toLowerCase().equals("voldoende")) {
+            return true;
+        } else {
+            double cijfer = Double.parseDouble(this.cijfer);
+            if(cijfer >= 5.5) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
 
 }
