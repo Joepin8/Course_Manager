@@ -13,15 +13,14 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Vul hier je E-mail in:"
         android:inputType="textPersonName"
-        android:text="Email"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvEmail"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1"
-        tools:text="E-mail" />
+        tools:layout_constraintTop_creator="1" />
 
     <EditText
         android:id="@+id/passwordET"
@@ -29,15 +28,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:ems="10"
+        android:hint="Vul hier je wachtwoord in:"
         android:inputType="textPassword"
-        android:text="Wachtwoord"
         app:layout_constraintLeft_toLeftOf="@+id/emailET"
         app:layout_constraintRight_toRightOf="@+id/emailET"
         app:layout_constraintTop_toBottomOf="@+id/emailET"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1"
-        tools:text="Wachtwoord" />
+        tools:layout_constraintTop_creator="1" />
 
     <Button
         android:id="@+id/loginBtn"
