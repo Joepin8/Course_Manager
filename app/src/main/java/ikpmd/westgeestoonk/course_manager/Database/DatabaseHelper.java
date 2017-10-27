@@ -18,7 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static SQLiteDatabase mSQLDB;
     private static DatabaseHelper mInstance;
     public static String dbName;
-    public static final int dbVersion = 16;
+    public static final int dbVersion = 26;
 
     public DatabaseHelper(Context ctx, String dbName) {
         super(ctx, dbName, null, dbVersion);
@@ -35,6 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.d("DB", "Nieuwe tabel aanmaken....");
         db.execSQL("CREATE TABLE " + DatabaseInfo.CourseTables.COURSE + " (" +
 //                BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 DatabaseInfo.CourseColumn.NAAM + " TEXT," +
@@ -50,6 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Log.d("DB", "Nieuwe database versie... upgrading....");
         db.execSQL("DROP TABLE IF EXISTS " + DatabaseInfo.CourseTables.COURSE);
         onCreate(db);
     }
@@ -70,25 +72,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return mSQLDB.query(table, columns, selection, selectArgs, groupBy, having, orderBy);
     }
 
-    public ArrayList<Course_Model> getCoursesJaar(int jaar) {
-        ArrayList<Course_Model> courses = new ArrayList<>();
-        String sql = "SELECT * FROM " + DatabaseInfo.CourseTables.COURSE + " WHERE jaar=" + jaar;
-
-        Cursor cs = mSQLDB.rawQuery(sql, null);
-        while(cs.moveToNext()) {
-            courses.add(new Course_Model(cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.NAAM)),
-                                        cs.getInt(cs.getColumnIndex(DatabaseInfo.CourseColumn.EC)),
-                                        cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.VAKCODE)),
-                                        cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.TOETSING)),
-                                        cs.getInt(cs.getColumnIndex(DatabaseInfo.CourseColumn.PERIODE)),
-                                        cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.TOETSMOMENT)),
-                                        cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.CIJFER)),
-                                        cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.JAAR))));
-        }
-
-        return courses;
-    }
-
     public ArrayList<Course_Model> getAllCourses() {
         ArrayList<Course_Model> courses = new ArrayList<>();
 
@@ -96,13 +79,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cs = mSQLDB.query(DatabaseInfo.CourseTables.COURSE, new String[]{"*"}, null, null, null, null, null);
         while(cs.moveToNext()) {
             courses.add(new Course_Model(cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.NAAM)),
-                    cs.getInt(cs.getColumnIndex(DatabaseInfo.CourseColumn.EC)),
-                    cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.VAKCODE)),
-                    cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.TOETSING)),
-                    cs.getInt(cs.getColumnIndex(DatabaseInfo.CourseColumn.PERIODE)),
-                    cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.TOETSMOMENT)),
-                    cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.CIJFER)),
-                    cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.JAAR))));
+                                        cs.getInt(cs.getColumnIndex(DatabaseInfo.CourseColumn.EC)),
+                                        cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.VAKCODE)),
+                                        cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.TOETSING)),
+                                        cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.PERIODE)),
+                                        cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.TOETSMOMENT)),
+                                        cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.CIJFER)),
+                                        cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.JAAR)),
+                                        cs.getInt(cs.getColumnIndex(DatabaseInfo.CourseColumn.KEUZEVAK)),
+                                        cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.NOTITIE))));
         }
 
         return courses;
@@ -112,6 +97,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         cv.put(DatabaseInfo.CourseColumn.CIJFER, course.getCijfer());
         mSQLDB.update(DatabaseInfo.CourseTables.COURSE, cv, DatabaseInfo.CourseColumn.VAKCODE + "=\"" + course.getVakcode() + "\"", null);
+    }
+
+    public void updateNotitie(Course_Model course) {
+        ContentValues cv = new ContentValues();
+        cv.put(DatabaseInfo.CourseColumn.NOTITIE, course.getNotitie());
+        mSQLDB.update(DatabaseInfo.CourseTables.COURSE, cv, DatabaseInfo.CourseColumn.VAKCODE + "=\"" + course.getVakcode() + "\"", null);
+    }
+
+    public void addColumn() {
+        mSQLDB.execSQL("ALTER TABLE " + DatabaseInfo.CourseTables.COURSE + " ADD COLUMN " + DatabaseInfo.CourseColumn.KEUZEVAK + " INTEGER");
+        mSQLDB.execSQL("ALTER TABLE " + DatabaseInfo.CourseTables.COURSE + " ADD COLUMN " + DatabaseInfo.CourseColumn.NOTITIE + " TEXT");
     }
 
 }
