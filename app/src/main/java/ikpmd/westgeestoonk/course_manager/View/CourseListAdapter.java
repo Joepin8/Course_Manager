@@ -42,7 +42,7 @@ public class CourseListAdapter extends ArrayAdapter<Course_Model> {
         }
         Course_Model c = getItem(pos);
         vh.naam.setText(c.getNaam());
-        vh.ec.setText("EC: " + c.getEC());
+        vh.ec.setText("EC: " + String.valueOf(c.getEC()));
         vh.jaar.setText("Jaar " + c.getJaar());
         vh.cijfer.setText(c.getCijfer());
 

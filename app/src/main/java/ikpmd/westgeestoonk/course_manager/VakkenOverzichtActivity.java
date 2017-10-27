@@ -8,10 +8,12 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,8 +21,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import ikpmd.westgeestoonk.course_manager.Database.DatabaseHelper;
@@ -35,6 +39,7 @@ public class VakkenOverzichtActivity extends AppCompatActivity {
     private CourseListAdapter cAdapter;
     private EditText zoekVeld;
     private ArrayList<Course_Model> courses;
+    private Spinner spinnerJaar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +51,33 @@ public class VakkenOverzichtActivity extends AppCompatActivity {
         uploadCijfers();
         lv = (ListView) findViewById(R.id.listview);
         zoekVeld = (EditText) findViewById(R.id.zoekVeld);
+        spinnerJaar = (Spinner) findViewById(R.id.spinnerJaar);
+
         initList();
+        initSpinner();
+
+        spinnerJaar.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+                if(item.equals("Alle jaren")) {
+                    initList(); // Reset de listView
+                } else if (item.equals("Jaar 1")) {
+                    filterVakkenVanJaar("1");
+                } else if (item.equals("Jaar 2")) {
+                    filterVakkenVanJaar("2");
+                } else if (item.equals("Jaar 3")) {
+                    filterVakkenVanJaar("3 of 4");
+                } else if (item.equals("Jaar 4")) {
+                    filterVakkenVanJaar("3 of 4");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -66,7 +97,7 @@ public class VakkenOverzichtActivity extends AppCompatActivity {
                 if(charSequence.toString().equals("")) {
                     initList(); //Reset de listView
                 } else {
-                    zoekItems(charSequence.toString());
+                    filterVakkenMetNaam(charSequence.toString());
                 }
             }
 
@@ -78,10 +109,29 @@ public class VakkenOverzichtActivity extends AppCompatActivity {
 
     }
 
-    private void zoekItems(String s) {
+    private void initSpinner() {
+        List<String> jaren = new ArrayList<>(Arrays.asList("Alle jaren", "Jaar 1", "Jaar 2", "Jaar 3", "Jaar 4"));
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, jaren);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerJaar.setAdapter(dataAdapter);
+    }
+
+    private void filterVakkenMetNaam(String s) {
         for(Iterator<Course_Model> iterator = courses.iterator(); iterator.hasNext(); ) {
             Course_Model c = iterator.next();
             if(!c.getNaam().toLowerCase().contains(s)) {
+                iterator.remove();
+            }
+        }
+
+        cAdapter.notifyDataSetChanged();
+    }
+
+    public void filterVakkenVanJaar(String jaar) {
+        initList(); //Reset de listview zodat alle jaren er weer in staan
+        for(Iterator<Course_Model> iterator = courses.iterator(); iterator.hasNext(); ) {
+            Course_Model c = iterator.next();
+            if(!c.getJaar().equals(jaar)) {
                 iterator.remove();
             }
         }

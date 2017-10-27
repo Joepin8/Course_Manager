@@ -83,7 +83,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                                         cs.getInt(cs.getColumnIndex(DatabaseInfo.CourseColumn.PERIODE)),
                                         cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.TOETSMOMENT)),
                                         cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.CIJFER)),
-                                        cs.getInt(cs.getColumnIndex(DatabaseInfo.CourseColumn.JAAR))));
+                                        cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.JAAR))));
         }
 
         return courses;
@@ -102,7 +102,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     cs.getInt(cs.getColumnIndex(DatabaseInfo.CourseColumn.PERIODE)),
                     cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.TOETSMOMENT)),
                     cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.CIJFER)),
-                    cs.getInt(cs.getColumnIndex(DatabaseInfo.CourseColumn.JAAR))));
+                    cs.getString(cs.getColumnIndex(DatabaseInfo.CourseColumn.JAAR))));
         }
 
         return courses;

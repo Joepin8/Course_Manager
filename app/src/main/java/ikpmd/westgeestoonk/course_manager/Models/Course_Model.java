@@ -21,11 +21,11 @@ public class Course_Model implements Serializable{
     private int periode;
     private String toetsmoment;
     private String cijfer;
-    private int jaar;
+    private String jaar;
 
     private DatabaseHelper databaseHelper;
 
-    public Course_Model(@NotNull String naam, int ec, String vakcode, String toetsing, int periode, String toetsmoment, String cijfer, int jaar) {
+    public Course_Model(@NotNull String naam, int ec, String vakcode, String toetsing, int periode, String toetsmoment, String cijfer, String jaar) {
         this.naam = naam;
         this.ec = ec;
         this.vakcode = vakcode;
@@ -71,8 +71,8 @@ public class Course_Model implements Serializable{
 
     }
 
-
-    public int getJaar() {
-        return jaar;
+    public String getJaar() {
+        return this.jaar;
     }
+
 }
