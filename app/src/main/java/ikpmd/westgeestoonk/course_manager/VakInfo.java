@@ -6,15 +6,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import ikpmd.westgeestoonk.course_manager.Enums.Toetsing;
 import ikpmd.westgeestoonk.course_manager.Models.Course_Model;
 
 public class VakInfo extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -24,7 +27,9 @@ public class VakInfo extends AppCompatActivity implements AdapterView.OnItemSele
     private TextView Periode;
     private TextView Toetsing;
     private TextView Toetsmoment;
-    private TextView Cijfer;
+    private Spinner TekstCijfer;
+    private EditText DecimaalCijfer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,36 +47,54 @@ public class VakInfo extends AppCompatActivity implements AdapterView.OnItemSele
         Periode = (TextView) findViewById(R.id.Periode);
         Toetsing = (TextView) findViewById(R.id.Toetsing);
         Toetsmoment = (TextView) findViewById(R.id.ToetsMoment);
-        Cijfer = (TextView) findViewById(R.id.Cijfer);
+        Spinner TekstCijfer = (Spinner) findViewById(R.id.TekstCijfer);
+        EditText DecimaalCijfer = (EditText) findViewById(R.id.DecimaalCijfer);
 
         Vaktitel.setText(vak.getNaam());
         EC.setText(String.valueOf(vak.getEC()));
         Periode.setText(String.valueOf(vak.getPeriode()));
         Toetsing.setText(vak.getToetsing().toString());
         Toetsmoment.setText(vak.getToetsmoment());
-        Cijfer.setText(vak.getCijfer());      // Spinner element
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+
+
 
         // Spinner click listener
-        spinner.setOnItemSelectedListener(this);
+        TekstCijfer.setOnItemSelectedListener(this);
 
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
-        categories.add("Automobile");
-        categories.add("Business Services");
-        categories.add("Computers");
-        categories.add("Education");
-        categories.add("Personal");
-        categories.add("Travel");
+        categories.add("Geen Cijfer");
+        categories.add("Voldoende");
+        categories.add("Onvoldoende");
 
-        // Creating adapter for spinner
+
+
+              // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // attaching data adapter to spinner
-        spinner.setAdapter(dataAdapter);
+        TekstCijfer.setAdapter(dataAdapter);
+
+        if(vak.getToetsing().equals(ikpmd.westgeestoonk.course_manager.Enums.Toetsing.Portfolio) ||
+                vak.getToetsing().equals(ikpmd.westgeestoonk.course_manager.Enums.Toetsing.Praktijkopdracht)||
+                vak.getToetsing().equals(ikpmd.westgeestoonk.course_manager.Enums.Toetsing.Projectoplevering)||
+                vak.getToetsing().equals(ikpmd.westgeestoonk.course_manager.Enums.Toetsing.Assessment)){
+            DecimaalCijfer.setVisibility(View.GONE);
+
+        }
+        else{
+            TekstCijfer.setVisibility(View.GONE);
+        }
+        switch(vak.getCijfer()){
+            case "Geen cijfer": TekstCijfer.setSelection(0);
+                                break;
+            case "Voldoende": TekstCijfer.setSelection(1);
+                                break;
+            case "Onvoldoende": TekstCijfer.setSelection(2);
+        }
 
     }
 
@@ -79,9 +102,10 @@ public class VakInfo extends AppCompatActivity implements AdapterView.OnItemSele
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
         String item = parent.getItemAtPosition(position).toString();
+        vak.setCijfer(item, getApplicationContext(), FirebaseAuth.getInstance().getUid());
 
         // Showing selected spinner item
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_SHORT).show();
     }
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
