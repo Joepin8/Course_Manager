@@ -3,10 +3,13 @@ package ikpmd.westgeestoonk.course_manager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 
@@ -28,6 +31,7 @@ public class VakkenOverzichtActivity extends AppCompatActivity {
     private DatabaseHelper databaseHelper;
     private ListView lv;
     private CourseListAdapter cAdapter;
+    private EditText zoekVeld;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,7 @@ public class VakkenOverzichtActivity extends AppCompatActivity {
         uploadCijfers();
         final ArrayList<Course_Model> courses = databaseHelper.getAllCourses();
         lv = (ListView) findViewById(R.id.listview);
+        zoekVeld = (EditText) findViewById(R.id.zoekVeld);
 
         cAdapter = new CourseListAdapter(getApplicationContext(), 0, courses);
         lv.setAdapter(cAdapter);

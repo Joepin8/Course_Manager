@@ -8,14 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filterable;
 import android.widget.TextView;
+import android.view.LayoutInflater.Filter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ikpmd.westgeestoonk.course_manager.Models.Course_Model;
 import ikpmd.westgeestoonk.course_manager.R;
 
-public class CourseListAdapter extends ArrayAdapter<Course_Model> {
+public class CourseListAdapter extends ArrayAdapter<Course_Model> implements Filterable {
 
     public CourseListAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Course_Model> objects) {
         super(context, resource, objects);
@@ -52,5 +55,7 @@ public class CourseListAdapter extends ArrayAdapter<Course_Model> {
         TextView ec;
         TextView cijfer;
     }
+
+
 
 }
