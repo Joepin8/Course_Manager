@@ -18,6 +18,8 @@ public class DatabaseInfo {
         public static final String TOETSMOMENT = "Toetsmoment";
         public static final String CIJFER = "Cijfer";
         public static final String JAAR = "Jaar";
+        public static final String KEUZEVAK = "Keuzevak";
+        public static final String NOTITIE = "Notitie";
     }
 
 }

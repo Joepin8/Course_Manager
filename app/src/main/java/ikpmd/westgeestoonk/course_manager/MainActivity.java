@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fAuth = FirebaseAuth.getInstance();
-        databaseHelper = databaseHelper.getHelper(this, fAuth.getUid());
+
         setTitle("Inloggen");
         emailEditText = (EditText) findViewById(R.id.emailET);
         passwordEditText = (EditText) findViewById(R.id.passwordET);
@@ -76,9 +76,11 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()) {
+                                databaseHelper = databaseHelper.getHelper(getApplicationContext(), fAuth.getUid());
+                                databaseHelper.addColumn();
+                                getAllCourses();
                                 Log.d("DEBUG", "ingelogd");
                                 Toast.makeText(getApplicationContext(), "Ingelogd", Toast.LENGTH_SHORT).show();
-                                 getAllCourses();
                                 Intent intent = new Intent(getApplicationContext(), VakkenOverzichtActivity.class);
                                 startActivity(intent);
                             } else {
@@ -134,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Course_Model response) {
                     addCourseToDatabase(response);
-                    Log.wtf("DEBUG", "vak: " + response.getVakcode() + " EC: " + response.getEC());
                 }
             });
             VolleyHelper.getInstance(this).addToRequestQueue(request);
@@ -145,7 +146,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void addCourseToDatabase(Course_Model course) {
         ContentValues cv = new ContentValues();
-
+        int keuzevak = 0;
+        if(course.isKeuzeVak()) keuzevak = 1;
         cv.put(DatabaseInfo.CourseColumn.NAAM, course.getNaam());
         cv.put(DatabaseInfo.CourseColumn.EC, course.getEC());
         cv.put(DatabaseInfo.CourseColumn.VAKCODE, course.getVakcode());
@@ -154,6 +156,8 @@ public class MainActivity extends AppCompatActivity {
         cv.put(DatabaseInfo.CourseColumn.TOETSMOMENT, course.getToetsmoment());
         cv.put(DatabaseInfo.CourseColumn.CIJFER, course.getCijfer());
         cv.put(DatabaseInfo.CourseColumn.JAAR, course.getJaar());
+        cv.put(DatabaseInfo.CourseColumn.KEUZEVAK, keuzevak);
+
         databaseHelper.insert(DatabaseInfo.CourseTables.COURSE, null, cv);
     }
 

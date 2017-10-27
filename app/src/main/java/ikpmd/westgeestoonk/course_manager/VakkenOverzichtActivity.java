@@ -2,6 +2,7 @@ package ikpmd.westgeestoonk.course_manager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,6 +15,8 @@ import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,14 +48,14 @@ public class VakkenOverzichtActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vakken_overzicht);
-        setTitle("Vakken");
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.vakken_action_bar);
         fAuth = FirebaseAuth.getInstance();
         databaseHelper = databaseHelper.getHelper(this, fAuth.getUid());
         uploadCijfers();
         lv = (ListView) findViewById(R.id.listview);
         zoekVeld = (EditText) findViewById(R.id.zoekVeld);
         spinnerJaar = (Spinner) findViewById(R.id.spinnerJaar);
-
         initList();
         initSpinner();
 

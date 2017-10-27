@@ -10,6 +10,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +72,7 @@ public class VakInfo extends AppCompatActivity implements AdapterView.OnItemSele
 
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
+
     }
 
     @Override
