@@ -36,7 +36,7 @@ public class Course_Model implements Serializable {
         this.keuzevak = keuzevak;
     }
 
-    public Course_Model(@NotNull String naam, int ec, String vakcode, String toetsing, String periode, String toetsmoment, String cijfer, String jaar, int keuzevak, String notitie) {
+    public Course_Model(@NotNull String naam, int ec, String vakcode, String toetsing, String periode, String toetsmoment, @NotNull String cijfer, String jaar, int keuzevak, String notitie) {
         this.naam = naam;
         this.ec = ec;
         this.vakcode = vakcode;
@@ -102,6 +102,9 @@ public class Course_Model implements Serializable {
     }
 
     public boolean isGehaald() {
+        if(this.cijfer == null) {
+            this.cijfer = "Geen cijfer";
+        }
 
         if(this.cijfer.toLowerCase().equals("geen cijfer")){
             return false;

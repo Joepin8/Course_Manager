@@ -20,9 +20,13 @@ import android.widget.Toast;
 
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ikpmd.westgeestoonk.course_manager.Enums.Toetsing;
 import ikpmd.westgeestoonk.course_manager.Models.Course_Model;
@@ -40,13 +44,14 @@ public class VakInfo extends AppCompatActivity implements AdapterView.OnItemSele
     private EditText NotitieTekst;
     private Button NotitieOpslaan;
 
+    private FirebaseAuth fAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vak_info);
 
-
+        fAuth = FirebaseAuth.getInstance();
         Bundle bundle = getIntent().getExtras();
         vak = (Course_Model) bundle.getSerializable("course");
 
@@ -114,6 +119,8 @@ public class VakInfo extends AppCompatActivity implements AdapterView.OnItemSele
             public void onClick(View v) {
                 vak.setCijfer(DecimaalCijfer.getText().toString(), getApplicationContext(), FirebaseAuth.getInstance().getUid());
                 findViewById(R.id.mainLayout).requestFocus();
+                updateCijfer();
+                Toast.makeText(getApplicationContext(), "Cijfer aangepast", Toast.LENGTH_SHORT).show();
             }
         });
         if(vak.getNotitie() != null){
@@ -130,10 +137,13 @@ public class VakInfo extends AppCompatActivity implements AdapterView.OnItemSele
 
         switch(vak.getCijfer()){
             case "Geen cijfer": TekstCijfer.setSelection(0);
+                                updateCijfer();
                                 break;
             case "Voldoende": TekstCijfer.setSelection(1);
+                                updateCijfer();
                                 break;
             case "Onvoldoende": TekstCijfer.setSelection(2);
+                                updateCijfer();
         }
     }
 
@@ -161,5 +171,9 @@ public class VakInfo extends AppCompatActivity implements AdapterView.OnItemSele
         return super.onKeyDown(keyCode, event);
     }
 
+    private void updateCijfer() {
+        DatabaseReference gebruikerRef = FirebaseDatabase.getInstance().getReference().child("gebruikers").child(fAuth.getUid()).child(vak.getVakcode());
+        gebruikerRef.setValue(vak.getCijfer());
+    }
 }
 

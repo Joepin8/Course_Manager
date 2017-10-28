@@ -53,7 +53,6 @@ public class VakkenOverzichtActivity extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.vakken_action_bar);
         fAuth = FirebaseAuth.getInstance();
         databaseHelper = databaseHelper.getHelper(this, fAuth.getUid());
-        uploadCijfers();
         lv = (ListView) findViewById(R.id.listview);
         zoekVeld = (EditText) findViewById(R.id.zoekVeld);
         spinnerJaar = (Spinner) findViewById(R.id.spinnerJaar);
@@ -167,16 +166,7 @@ public class VakkenOverzichtActivity extends AppCompatActivity {
         lv.setAdapter(cAdapter);
     }
 
-    private void uploadCijfers() {
-        DatabaseReference gebruikerRef = FirebaseDatabase.getInstance().getReference().child("gebruikers").child(fAuth.getUid());
-        Map<String, String> cijfers = new HashMap<String, String>();
-        for(Course_Model c : databaseHelper.getAllCourses()) {
-            if(!c.getCijfer().equals("Geen cijfer")) {
-                cijfers.put(c.getVakcode(), c.getCijfer());
-            }
-        }
-        gebruikerRef.setValue(cijfers);
-    }
+
 
 }
 

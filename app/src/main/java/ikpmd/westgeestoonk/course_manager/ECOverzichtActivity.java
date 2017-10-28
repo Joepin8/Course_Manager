@@ -85,11 +85,11 @@ public class ECOverzichtActivity extends AppCompatActivity {
         entries.add(new PieEntry(MAX_EC - behaaldeEc, "Nog te behalen EC's"));
 
         ArrayList<Integer> colors = new ArrayList<>();
-        if (behaaldeEc <10) {
+        if (behaaldeEc < 60) {
             colors.add(Color.rgb(244,81,30));
-        } else if (behaaldeEc < 40){
+        } else if (behaaldeEc < 120){
             colors.add(Color.rgb(235,0,0));
-        } else if  (behaaldeEc < 50) {
+        } else if  (behaaldeEc < 180) {
             colors.add(Color.rgb(253,216,53));
         } else {
             colors.add(Color.rgb(67,160,71));
