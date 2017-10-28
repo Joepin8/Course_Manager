@@ -37,6 +37,8 @@ public class VakInfo extends AppCompatActivity implements AdapterView.OnItemSele
     private Spinner TekstCijfer;
     private EditText DecimaalCijfer;
     private Button Opslaan;
+    private EditText NotitieTekst;
+    private Button NotitieOpslaan;
 
 
     @Override
@@ -58,6 +60,8 @@ public class VakInfo extends AppCompatActivity implements AdapterView.OnItemSele
         TekstCijfer = (Spinner) findViewById(R.id.TekstCijfer);
         DecimaalCijfer = (EditText) findViewById(R.id.DecimaalCijfer);
         Opslaan = (Button) findViewById(R.id.Opslaan);
+        NotitieTekst = (EditText) findViewById(R.id.NotitieTekst);
+        NotitieOpslaan = (Button) findViewById(R.id.NotitieOpslaan);
 
         Vaktitel.setText(vak.getNaam());
         EC.setText(String.valueOf(vak.getEC()));
@@ -112,6 +116,16 @@ public class VakInfo extends AppCompatActivity implements AdapterView.OnItemSele
                 findViewById(R.id.mainLayout).requestFocus();
             }
         });
+        if(vak.getNotitie() != null){
+            NotitieTekst.setText(vak.getNotitie());
+        }
+        NotitieOpslaan.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                vak.setNotitie(NotitieTekst.getText().toString(), getApplicationContext(), FirebaseAuth.getInstance().getUid());
+            }
+
+        });
 
 
         switch(vak.getCijfer()){
@@ -128,6 +142,7 @@ public class VakInfo extends AppCompatActivity implements AdapterView.OnItemSele
         // On selecting a spinner item
         String item = parent.getItemAtPosition(position).toString();
         vak.setCijfer(item, getApplicationContext(), FirebaseAuth.getInstance().getUid());
+        findViewById(R.id.mainLayout).requestFocus();
 
         // Showing selected spinner item
         Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_SHORT).show();
